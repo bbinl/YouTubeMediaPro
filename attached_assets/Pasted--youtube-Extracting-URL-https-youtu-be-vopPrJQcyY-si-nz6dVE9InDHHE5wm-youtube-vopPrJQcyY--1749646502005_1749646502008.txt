@@ -1,0 +1,65 @@
+[youtube] Extracting URL: https://youtu.be/-vopPrJQcyY?si=nz6dVE9InDHHE5wm
+
+[youtube] -vopPrJQcyY: Downloading webpage
+
+[youtube] -vopPrJQcyY: Downloading ios player API JSON
+
+WARNING: [youtube] YouTube said: ERROR - Precondition check failed.
+
+WARNING: [youtube] HTTP Error 400: Bad Request. Retrying (1/3)...
+
+[youtube] -vopPrJQcyY: Downloading ios player API JSON
+
+WARNING: [youtube] YouTube said: ERROR - Precondition check failed.
+
+WARNING: [youtube] HTTP Error 400: Bad Request. Retrying (2/3)...
+
+[youtube] -vopPrJQcyY: Downloading ios player API JSON
+
+WARNING: [youtube] YouTube said: ERROR - Precondition check failed.
+
+WARNING: [youtube] HTTP Error 400: Bad Request. Retrying (3/3)...
+
+[youtube] -vopPrJQcyY: Downloading ios player API JSON
+
+WARNING: [youtube] YouTube said: ERROR - Precondition check failed.
+
+[youtube] -vopPrJQcyY: Downloading android player API JSON
+
+WARNING: [youtube] YouTube said: ERROR - Precondition check failed.
+
+WARNING: [youtube] HTTP Error 400: Bad Request. Retrying (1/3)...
+
+[youtube] -vopPrJQcyY: Downloading android player API JSON
+
+WARNING: [youtube] YouTube said: ERROR - Precondition check failed.
+
+WARNING: [youtube] HTTP Error 400: Bad Request. Retrying (2/3)...
+
+[youtube] -vopPrJQcyY: Downloading android player API JSON
+
+WARNING: [youtube] YouTube said: ERROR - Precondition check failed.
+
+WARNING: [youtube] HTTP Error 400: Bad Request. Retrying (3/3)...
+
+[youtube] -vopPrJQcyY: Downloading android player API JSON
+
+WARNING: [youtube] YouTube said: ERROR - Precondition check failed.
+
+WARNING: [youtube] Unable to download API page: HTTP Error 400: Bad Request (caused by <HTTPError 400: Bad Request>); please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+
+WARNING: [youtube] Unable to download API page: HTTP Error 400: Bad Request (caused by <HTTPError 400: Bad Request>); please report this issue on  https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the appropriate issue template. Confirm you are on the latest version using  yt-dlp -U
+
+[youtube] -vopPrJQcyY: Downloading player fc2a56a5
+
+WARNING: [youtube] -vopPrJQcyY: nsig extraction failed: You may experience throttling for some formats
+
+         n = auiCC8CbAaJIAx4 ; player = https://www.youtube.com/s/player/fc2a56a5/player_ias.vflset/en_US/base.js
+
+[info] -vopPrJQcyY: Downloading 1 format(s): 18
+
+ERROR: unable to download video data: HTTP Error 403: Forbidden
+
+ERROR:downloader:Audio download failed: ERROR: unable to download video data: HTTP Error 403: Forbidden
+
+ERROR:routes:Download failed for URL https://youtu.be/-vopPrJQcyY?si=nz6dVE9InDHHE5wm: Audio download failed: ERROR: unable to download video data: HTTP Error 403: Forbidden

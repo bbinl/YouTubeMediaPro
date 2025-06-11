@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Downloader</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/css/custom.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="text-center">
+                    <h1 class="display-4 mb-3">
+                        <i class="fab fa-youtube text-danger me-2"></i>
+                        YouTube Downloader
+                    </h1>
+                    <p class="lead text-muted">Download YouTube videos and Shorts in high quality</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Download Form -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="downloadForm">
+                            <!-- URL Input -->
+                            <div class="mb-3">
+                                <label for="urlInput" class="form-label">
+                                    <i class="fas fa-link me-1"></i>
+                                    YouTube URL
+                                </label>
+                                <div class="input-group">
+                                    <input type="url" class="form-control" id="urlInput" 
+                                           placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/..."
+                                           required>
+                                    <button type="button" class="btn btn-outline-secondary" id="infoBtn">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Format Selection -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <i class="fas fa-file-video me-1"></i>
+                                        Format
+                                    </label>
+                                    <div class="btn-group w-100" role="group">
+                                        <input type="radio" class="btn-check" name="format" id="videoFormat" value="video" checked>
+                                        <label class="btn btn-outline-primary" for="videoFormat">
+                                            <i class="fas fa-video me-1"></i>Video
+                                        </label>
+                                        
+                                        <input type="radio" class="btn-check" name="format" id="audioFormat" value="audio">
+                                        <label class="btn btn-outline-primary" for="audioFormat">
+                                            <i class="fas fa-music me-1"></i>Audio
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        <i class="fas fa-cog me-1"></i>
+                                        Quality
+                                    </label>
+                                    <select class="form-select" id="qualitySelect">
+                                        <!-- Video qualities (default) -->
+                                        <option value="3gp">3GP (Mobile)</option>
+                                        <option value="360p">360p</option>
+                                        <option value="480p">480p (SD)</option>
+                                        <option value="720p" selected>720p</option>
+                                        <option value="1080p">1080p</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Download Button -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg" id="downloadBtn">
+                                    <i class="fas fa-download me-2"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cookies Upload Section -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-8">
+                <div class="card border-warning">
+                    <div class="card-header bg-warning text-dark">
+                        <h6 class="mb-0">
+                            <i class="fas fa-shield-alt me-2"></i>
+                            YouTube Bot Detection Fix
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-2">If you get "Sign in to confirm you're not a bot" errors, upload your YouTube cookies:</p>
+                        <div class="mb-3">
+                            <input type="file" class="form-control" id="cookiesFile" accept=".txt" style="display: none;">
+                            <button type="button" class="btn btn-warning btn-sm me-2" onclick="document.getElementById('cookiesFile').click()">
+                                <i class="fas fa-upload me-1"></i>Upload cookies.txt
+                            </button>
+                            <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="collapse" data-bs-target="#cookiesHelp">
+                                <i class="fas fa-question-circle me-1"></i>How to get cookies?
+                            </button>
+                        </div>
+                        <div class="collapse" id="cookiesHelp">
+                            <div class="alert alert-info mb-0">
+                                <ol class="mb-0">
+                                    <li>Install browser extension "Get cookies.txt LOCALLY"</li>
+                                    <li>Visit youtube.com and log in</li>
+                                    <li>Use extension to export cookies as cookies.txt</li>
+                                    <li>Upload the file here</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div id="cookiesStatus" class="mt-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Info Card (Hidden by default) -->
+        <div class="row justify-content-center mb-4" id="videoInfoCard" style="display: none;">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Video Information
+                        </h5>
+                        <div id="videoInfoContent">
+                            <!-- Video info will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Card (Hidden by default) -->
+        <div class="row justify-content-center mb-4" id="progressCard" style="display: none;">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-spinner fa-spin me-2"></i>
+                            Download Progress
+                        </h5>
+                        <div class="progress mb-3">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                 role="progressbar" style="width: 0%"></div>
+                        </div>
+                        <p class="text-muted mb-0" id="progressText">Preparing download...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download Result Card (Hidden by default) -->
+        <div class="row justify-content-center mb-4" id="resultCard" style="display: none;">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="resultContent">
+                            <!-- Result content will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Downloads -->
+        {% if recent_downloads %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-history me-2"></i>
+                            Recent Downloads
+                        </h5>
+                        <form method="POST" action="/cleanup" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash me-1"></i>
+                                Clean Up Files
+                            </button>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Format</th>
+                                        <th>Quality</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for download in recent_downloads %}
+                                    <tr>
+                                        <td>
+                                            <div class="text-truncate" style="max-width: 300px;">
+                                                {{ download.title or 'Processing...' }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-{{ 'primary' if download.format_type == 'video' else 'success' }}">
+                                                <i class="fas fa-{{ 'video' if download.format_type == 'video' else 'music' }} me-1"></i>
+                                                {{ download.format_type|title }}
+                                            </span>
+                                        </td>
+                                        <td>{{ download.quality }}</td>
+                                        <td>
+                                            {% if download.status == 'completed' %}
+                                                <span class="badge bg-success">
+                                                    <i class="fas fa-check me-1"></i>Completed
+                                                </span>
+                                            {% elif download.status == 'failed' %}
+                                                <span class="badge bg-danger">
+                                                    <i class="fas fa-times me-1"></i>Failed
+                                                </span>
+                                            {% else %}
+                                                <span class="badge bg-warning">
+                                                    <i class="fas fa-clock me-1"></i>Pending
+                                                </span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ download.created_at.strftime('%Y-%m-%d %H:%M') if download.created_at else 'N/A' }}</td>
+                                        <td>
+                                            {% if download.status == 'completed' and download.file_path %}
+                                                <a href="/api/download/{{ download.id }}/file" 
+                                                   class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-download me-1"></i>Download
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Features Section -->
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-video fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="card-title">High Quality Video</h5>
+                        <p class="card-text text-muted">Download videos in 360p, 720p, or 1080p quality</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-music fa-3x text-success"></i>
+                        </div>
+                        <h5 class="card-title">Audio Extraction</h5>
+                        <p class="card-text text-muted">Extract audio in MP3 format with quality options</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-mobile-alt fa-3x text-warning"></i>
+                        </div>
+                        <h5 class="card-title">YouTube Shorts</h5>
+                        <p class="card-text text-muted">Full support for YouTube Shorts downloads</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
